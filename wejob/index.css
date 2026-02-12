@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-slate-900 overflow-x-hidden;
+  }
+
+  /* Responsive Typography Scale */
+  h1 {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight;
+  }
+  h2 {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight;
+  }
+  h3 {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold leading-snug;
+  }
+  p {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+}
+
+@layer components {
+  /* Responsive Container/Boxes */
+  .container {
+    @apply px-4 sm:px-6 mx-auto;
+    max-width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      width: 95%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      width: 92%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+
+  /* Responsive Buttons */
+  .btn-responsive {
+    @apply inline-flex items-center justify-center transition-all duration-200 active:scale-95 touch-none;
+  }
+
+  @media (max-width: 1024px) {
+    .btn-responsive {
+      @apply px-5 py-2.5 text-sm;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .btn-responsive {
+      @apply w-full px-6 py-3 text-base font-semibold;
+      /* Thumb-friendly padding */
+    }
+    /* Disable hover on touch devices */
+    .btn-responsive:hover {
+      @apply transform-none;
+    }
+  }
+}
+
+@layer utilities {
+  /* Grid and Column adjustments */
+  @media (max-width: 1024px) {
+    .tablet-grid-2 {
+      @apply grid-cols-2 !important;
+    }
+    .tablet-col-1 {
+      @apply flex-col !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mobile-grid-1 {
+      @apply grid-cols-1 !important;
+    }
+    .mobile-col-1 {
+      @apply flex-col !important;
+    }
+    .mobile-hidden {
+      @apply hidden !important;
+    }
+  }
+
+  @keyframes bounce-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 5s ease-in-out infinite;
+  }
+
+  /* Styled modern scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
