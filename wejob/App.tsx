@@ -19,7 +19,6 @@ import FreelancerProfilePage from './pages/FreelancerProfilePage';
 import PricingSection from './components/PricingSection';
 import Footer from './components/Footer';
 import AllJobsPage from './pages/AllJobsPage';
-import FreeTrialPopup from './components/FreeTrialPopup';
 import { UserProvider } from './context/UserContext';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -66,16 +65,6 @@ import ReportsLogsPage from './components/dashboard/admin-dashboard/pages/Report
 
 const HomePage: React.FC<{ onShowNotification: (msg: string) => void, onNavigate: (page: string, data?: any) => void }> = ({ onShowNotification, onNavigate }) => {
   const marketplaceRef = useRef<HTMLElement>(null);
-  const [showPopup, setShowPopup] = useState(false);
-
-  useEffect(() => {
-    // Trigger popup after 5 seconds
-    const timer = setTimeout(() => {
-      setShowPopup(true);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleInternalPostProjectClick = () => {
     marketplaceRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -83,16 +72,16 @@ const HomePage: React.FC<{ onShowNotification: (msg: string) => void, onNavigate
 
   return (
     <>
-      <FreeTrialPopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
       <Header onNavigate={onNavigate} onPostProjectClick={handleInternalPostProjectClick} />
-      <div className="relative bg-[#1C357B] min-h-[85vh] py-12 flex flex-col text-white overflow-hidden font-sans">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-30 blur-3xl"></div>
+      <div className="relative w-full max-w-full bg-gradient-to-br from-[#1C357B] via-[#1C357B] to-[#0A1635] min-h-[85vh] lg:h-[85vh] flex flex-col text-white font-sans py-12 lg:py-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-500/10 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-30 blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/10 rounded-full translate-x-1/2 translate-y-1/2 opacity-30 blur-3xl"></div>
-        <div className="flex-grow flex items-center w-full">
+        
+        <div className="flex-grow flex items-center">
           <HeroSection />
         </div>
       </div>
-      <main>
+      <main className="w-full overflow-x-hidden">
         <LatestJobs onShowNotification={onShowNotification} onNavigate={onNavigate} />
         <Marketplace ref={marketplaceRef} onNavigate={onNavigate} />
         <PromoSection />
@@ -108,7 +97,9 @@ const HomePage: React.FC<{ onShowNotification: (msg: string) => void, onNavigate
 const PageLayout: React.FC<{ children: React.ReactNode, onNavigate: (page: string, data?: any) => void }> = ({ children, onNavigate }) => (
   <>
     <Header onNavigate={onNavigate} onPostProjectClick={() => onNavigate('home')} />
-    {children}
+    <div className="w-full overflow-x-hidden">
+      {children}
+    </div>
     <Footer />
   </>
 );
@@ -170,7 +161,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full overflow-x-hidden relative">
       <Toaster position="top-right" />
       {notification && (
         <Notification message={notification} onClose={() => setNotification(null)} />

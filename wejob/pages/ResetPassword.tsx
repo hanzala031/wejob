@@ -16,39 +16,40 @@ function ResetPassword() {
   useEffect(() => {
     let mounted = true;
 
-    // 1. Check if we already have a session (e.g. implicitly handled by Supabase client)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (mounted && session) {
-        setSession(session);
-        setLoading(false);
+    // 1. Initial check for session
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (mounted) {
+        if (session) {
+          setSession(session);
+          setLoading(false);
+        }
       }
-    });
+    };
+    checkSession();
 
-    // 2. Listen for auth state changes (Standard Supabase Auth Flow)
+    // 2. Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log('ResetPassword Auth Event:', event);
       if (!mounted) return;
 
-      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
-        setSession(session);
-        setLoading(false);
+      if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+        if (session) {
+          setSession(session);
+          setLoading(false);
+        }
       } else if (event === 'SIGNED_OUT') {
         setSession(null);
+        setLoading(false);
       }
     });
 
-    // 3. Fallback: If no session after a timeout and URL has hash, show error
-    // (Only if we are still loading)
+    // 3. Robust Fallback: Clear loading after a timeout
     const timeout = setTimeout(() => {
-      if (mounted && loading && !session) {
-         // If we still don't have a session but we have a hash, Supabase might be slow or failed.
-         // If we don't have a hash, it's definitely an invalid visit.
-         const hasHash = window.location.hash.includes('access_token');
-         if (!hasHash) {
-             setLoading(false); // Will show "Invalid Link"
-         }
+      if (mounted && loading) {
+        setLoading(false);
       }
-    }, 3000);
+    }, 5000);
 
     return () => {
       mounted = false;

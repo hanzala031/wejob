@@ -6,10 +6,10 @@ import { Play } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   return (
-    <main className="container mx-auto px-6 py-10 lg:py-14 relative z-10">
+    <main className="container mx-auto px-6 py-10 lg:py-14 relative z-10 overflow-hidden">
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
         {/* Left side: Illustration */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start order-2 lg:order-1">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start order-2 lg:order-1 mt-10 lg:mt-0">
           <HeroIllustration />
         </div>
 
@@ -18,7 +18,7 @@ const HeroSection: React.FC = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3">
             Hire expert freelancers <br /> for any job, Online
           </h1>
-          <p className="text-base sm:text-lg text-gray-300 mb-6 max-w-lg mx-auto lg:mx-0">
+          <p className="text-base font-light sm:text-lg text-gray-300 mb-6 max-w-lg mx-auto lg:mx-0">
             Consectetur adipisicing elit sed do eiusmod tempor incuntes ut labore etdolore magna aliqua enim.
           </p>
           

@@ -37,7 +37,11 @@ const SignInPage: React.FC<SignInPageProps> = ({ onNavigate }) => {
             });
 
             if (authError) {
-                setError(authError.message);
+                if (authError.message === "Email not confirmed") {
+                    alert("Please confirm your email address before logging in.");
+                } else {
+                    setError(authError.message);
+                }
                 return;
             }
 

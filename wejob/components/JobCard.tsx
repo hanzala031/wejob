@@ -174,22 +174,22 @@ const JobCard: React.FC<JobCardProps> = ({ job, onShowNotification, onNavigate }
 
       <div className="w-full lg:w-auto border-t lg:border-t-0 pt-4 lg:pt-0">
         <div className="flex flex-col sm:flex-row lg:flex-row gap-4 items-start sm:items-center w-full lg:w-auto">
-           <div className="grid grid-cols-3 gap-2 md:gap-4 w-full py-6 sm:w-auto">
-              <div className="min-w-0">
-                <p className="text-[9px] lg:text-[12px] text-gray-500 uppercase tracking-widest font-semibold mb-0.5 truncate">Budget</p>
+           <div className="grid grid-cols-3 gap-4 md:gap-6 w-full sm:w-auto lg:w-[320px]">
+              <div className="min-w-0 lg:w-[90px]">
+                <p className="text-[9px] lg:text-[11px] text-gray-500 uppercase tracking-widest font-black mb-1 truncate">Budget</p>
                 <p className="text-sm md:text-base font-bold text-gray-900 truncate">${job.price}</p>
               </div>
-              <div className="min-w-0">
-                <p className="text-[9px] lg:text-[12px] text-gray-500 uppercase tracking-widest font-semibold mb-0.5 truncate">Expiry</p>
+              <div className="min-w-0 lg:w-[110px]">
+                <p className="text-[9px] lg:text-[11px] text-gray-500 uppercase tracking-widest font-black mb-1 truncate">Expiry</p>
                 <p className="text-xs md:text-sm text-gray-900 font-bold truncate">{job.expiry.split(',')[0]}</p>
               </div>
-              <div className="min-w-0">
-                <p className="text-[9px] lg:text-[12px] text-gray-500 uppercase tracking-widest font-semibold mb-0.5 truncate">Bids</p>
+              <div className="min-w-0 lg:w-[80px]">
+                <p className="text-[9px] lg:text-[11px] text-gray-500 uppercase tracking-widest font-black mb-1 truncate">Bids</p>
                 <p className="text-xs md:text-sm text-gray-900 font-bold truncate">{job.proposals.split(' ')[0]}</p>
               </div>
            </div>
            
-           <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+           <div className="flex items-center gap-2 w-full sm:w-auto mt-4 sm:mt-0">
                <button 
                   className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg border-2 transition-all active:scale-90 ${isSaved ? 'border-red-100 bg-red-50 text-red-500' : 'border-gray-100 text-gray-400 hover:border-blue-100 hover:text-blue-500'}`}
                   onClick={handleHeartClick}

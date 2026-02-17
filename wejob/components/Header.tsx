@@ -134,15 +134,50 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onPostProjectClick }) => {
             </button>
           </div>
 
-          <div className="lg:hidden flex items-center gap-4">
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-white bg-white/10 rounded-lg">
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          <div className="lg:hidden flex items-center z-[110]">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              className="relative w-10 h-10 flex items-center justify-center focus:outline-none"
+            >
+              <div className="w-6 h-5 relative flex flex-col justify-between items-center">
+                <span className={`block w-full h-0.5 bg-white rounded-full transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'rotate-45 translate-y-[9px]' : ''}`} />
+                <span className={`block w-full h-0.5 bg-white rounded-full transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'opacity-0 translate-x-4' : ''}`} />
+                <span className={`block w-full h-0.5 bg-white rounded-full transition-all duration-500 ease-in-out ${isMobileMenuOpen ? '-rotate-45 -translate-y-[9px]' : ''}`} />
+              </div>
             </button>
           </div>
         </div>
+      </div>
 
-        {isMobileMenuOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-[73px] bg-[#1C357B] border-b border-white/10 p-6 shadow-2xl animate-in slide-in-from-top duration-300">
+      {/* Premium Mobile Menu Drawer */}
+      <div 
+        className={`lg:hidden fixed inset-0 z-[999] transition-all duration-500 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}
+      >
+        {/* Backdrop */}
+        <div 
+          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+        
+        {/* Drawer Content */}
+        <div 
+          className={`absolute top-0 right-0 h-screen w-full sm:w-[350px] bg-[#1C357B] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          {/* Close Button Inside Drawer */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-6 right-6 p-2 text-white/50 hover:text-white transition-colors z-[1001]"
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          <div className="flex flex-col h-full p-8 pt-10 overflow-y-auto">
+            {/* Logo at Top */}
+            <div className="flex items-center gap-2 mb-10">
+              <Command className="h-6 w-6 text-[#2563eb]" />
+              <span className="text-2xl font-bold tracking-tight text-white uppercase">We<span className="text-[#2563eb]">Job</span></span>
+            </div>
+
             <div className="flex flex-col gap-6">
               {renderAuthButtons(true)}
               <button
@@ -165,24 +200,24 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onPostProjectClick }) => {
               <div className="pt-4 border-t border-white/10">
                 <button
                   onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                  className="w-full flex items-center justify-between text-left px-4 py-3 text-gray-200 bg-white/5 rounded-xl"
+                  className={`w-full flex items-center justify-between text-left px-4 py-3 rounded-xl transition-all ${isLanguageOpen ? 'bg-white/10 text-white' : 'text-gray-200 bg-white/5'}`}
                 >
                   <div className="flex items-center gap-3">
-                    <Globe className="w-5 h-5 text-blue-400" />
+                    <Globe className={`w-5 h-5 ${isLanguageOpen ? 'text-white' : 'text-blue-400'}`} />
                     <span className="font-medium">Language</span>
                   </div>
                   <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${isLanguageOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {isLanguageOpen && (
-                  <div className="mt-2 grid grid-cols-2 gap-2">
-                    <button onClick={() => setIsLanguageOpen(false)} className="px-4 py-3 text-center text-sm text-gray-200 bg-white/10 rounded-lg">English</button>
-                    <button onClick={() => setIsLanguageOpen(false)} className="px-4 py-3 text-center text-sm text-gray-200 bg-white/10 rounded-lg">Spanish</button>
+                  <div className="mt-2 grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-top-1">
+                    <button onClick={() => { setIsLanguageOpen(false); setIsMobileMenuOpen(false); }} className="px-4 py-3 text-center text-sm font-bold text-white bg-white/10 rounded-lg active:bg-blue-600">English</button>
+                    <button onClick={() => { setIsLanguageOpen(false); setIsMobileMenuOpen(false); }} className="px-4 py-3 text-center text-sm font-bold text-white bg-white/10 rounded-lg active:bg-blue-600">Spanish</button>
                   </div>
                 )}
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </header>
   );
